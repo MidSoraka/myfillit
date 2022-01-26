@@ -6,7 +6,7 @@
 /*   By: omistaja <omistaja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 21:08:57 by omistaja          #+#    #+#             */
-/*   Updated: 2022/01/25 08:49:01 by omistaja         ###   ########.fr       */
+/*   Updated: 2022/01/26 10:45:18 by omistaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static t_tetrimino	*ft_lstnewmal(void)
 	list = malloc(sizeof(t_tetrimino));
 	if (list == NULL)
 		return (NULL);
-    list->line = (char **)malloc(sizeof(char *) * 6);
-    list->line[4] = NULL; // not needed, but might be depending if tetrimino->line is used in a while condition
+    list->line = (char **)malloc(sizeof(char *) * 5);
+    list->line[4] = NULL;
 	list->next = NULL;
 	return (list);
 }
@@ -34,12 +34,14 @@ static void	print_tetriminos(t_tetrimino *tetrimino)
 	while (tetrimino->next)
 	{
         index = 0;
-        is_tetrimino_valid(tetrimino->line);
+        //is_tetrimino_valid(tetrimino);
 		while (tetrimino->line[index])
 		{
 			ft_putendl(tetrimino->line[index]);
 			index++;
 		}
+        printf("\n\nheight is %d\n\n", tetrimino->height);
+        printf("\n\nwidth is %d\n\n", tetrimino->width);
         tetrimino = tetrimino->next;
         if (tetrimino->next)
 		    ft_putchar('\n');
@@ -80,7 +82,7 @@ static void copy(int fd)
         tetrimino = head;
         print_tetriminos(tetrimino);
     }
-//    print_tetriminos(tetrimino);
+    //print_tetriminos(tetrimino);
 }
 
 void fillit(char *filename)

@@ -6,7 +6,7 @@
 /*   By: omistaja <omistaja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 21:08:57 by omistaja          #+#    #+#             */
-/*   Updated: 2022/01/26 10:45:18 by omistaja         ###   ########.fr       */
+/*   Updated: 2022/01/26 13:17:36 by omistaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ static void copy(int fd)
 {
     t_tetrimino *tetrimino;
     t_tetrimino *head;
+    int count_tetri;  // tracks how many tetriminoes there are
     int gnl;
     int index;
 
     gnl = 1;
     index = 0;
+    count_tetri = 0;
     tetrimino = ft_lstnewmal(); // if index is 0 malloc space for next list and set a pointer when index is at 3
     head = tetrimino;
     while (gnl > 0)
@@ -64,6 +66,7 @@ static void copy(int fd)
         gnl = get_next_line(fd, &tetrimino->line[index]);
         if (index == 3)
         {
+            count_tetri++;
             index = 0;
             tetrimino->next = ft_lstnewmal();
             tetrimino = tetrimino->next;
@@ -74,13 +77,15 @@ static void copy(int fd)
         else
             index++;
     }
+//    printf("\n\ntetriminoes are %d\n", count_tetri);
     tetrimino = head;
     if (error_check(tetrimino, gnl) == 0)
         ft_putendl("Error found. (Ending program...)");
     else
     {
         tetrimino = head;
-        print_tetriminos(tetrimino);
+        solve(tetrimino, count_tetri);
+        //print_tetriminos(tetrimino);
     }
     //print_tetriminos(tetrimino);
 }

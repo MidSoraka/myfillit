@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/23 14:20:19 by vlaine            #+#    #+#             */
-/*   Updated: 2021/11/25 13:40:34 by vlaine           ###   ########.fr       */
+/*   Created: 2021/11/26 14:13:56 by raho              #+#    #+#             */
+/*   Updated: 2021/12/07 20:23:25 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	ft_lstadd(t_list **alst, t_list *new)
 {
-	t_list	*list;
-
-	list = new;
-	list->next = *alst;
-	*alst = list;
+	new->next = *alst;
+	*alst = new;
 }

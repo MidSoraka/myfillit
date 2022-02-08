@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/11 15:14:57 by vlaine            #+#    #+#             */
-/*   Updated: 2021/12/16 23:38:14 by vlaine           ###   ########.fr       */
+/*   Created: 2021/11/04 19:54:28 by raho              #+#    #+#             */
+/*   Updated: 2021/11/24 21:17:28 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,21 @@
 
 char	*ft_strnew(size_t size)
 {
-	char	*arr;
 	size_t	index;
+	char	*new;
 
 	index = 0;
-	arr = (char *) malloc(size * sizeof(char) + 1);
-	if (arr == NULL)
-		return (NULL);
+	new = (char *)malloc(sizeof(char) * size + 1);
+	if (!new)
+		return (0);
 	else
-		ft_bzero(arr, size + 1);
-	return (arr);
+	{
+		while (index < size)
+		{
+			new[index] = 0;
+			index++;
+		}
+		new[index] = '\0';
+	}
+	return (new);
 }

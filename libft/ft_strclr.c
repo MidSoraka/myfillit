@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strclr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/11 15:36:58 by vlaine            #+#    #+#             */
-/*   Updated: 2021/12/08 12:30:25 by vlaine           ###   ########.fr       */
+/*   Created: 2021/11/04 19:56:28 by raho              #+#    #+#             */
+/*   Updated: 2021/11/24 21:22:46 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 void	ft_strclr(char *s)
 {
-	size_t	index;
+	unsigned long	index;
 
 	index = 0;
-	while (s[index])
+	if (s)
 	{
-		s[index] = '\0';
-		index++;
+		while (s[index])
+		{
+			((unsigned char *)s)[index] = 0;
+			index++;
+		}
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/19 02:09:41 by vlaine            #+#    #+#             */
-/*   Updated: 2021/11/26 12:05:49 by vlaine           ###   ########.fr       */
+/*   Created: 2021/11/04 18:50:13 by raho              #+#    #+#             */
+/*   Updated: 2021/11/24 21:27:49 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ void	ft_putstr(char const *s)
 	int	index;
 
 	index = 0;
-	while (s[index])
+	if (s)
 	{
-		ft_putchar(s[index]);
-		index++;
+		while (s[index] != '\0')
+		{
+			ft_putchar(s[index]);
+			index++;
+		}
 	}
 }

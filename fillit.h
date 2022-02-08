@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omistaja <omistaja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:44:44 by raho              #+#    #+#             */
-/*   Updated: 2022/01/26 11:53:26 by omistaja         ###   ########.fr       */
+/*   Updated: 2022/02/03 22:31:04 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,29 @@
 
 # include <fcntl.h>
 # include "./libft/libft.h"
+#include <stdio.h> // remove
 
-typedef struct s_tetrimino
+typedef struct s_tlist
 {
-	int					height;
-	int					width;
-	char			    **line;
-	struct s_tetrimino	*next;
-}					t_tetrimino;
+	int					letter;
+	char				**tetrimino;
+	int					row[5];
+	int					col[5];
+	struct s_tlist	*next;
+}	t_tlist;
 
-int	get_next_line(const int fd, char **line);
+typedef struct s_coord
+{
+	int	col[5];
+	int	row[5];
+}	t_coord;
 
-void fillit(char *str);
-
-int error_check(t_tetrimino *tetrimino, int gnl);
-
-int is_tetrimino_valid(t_tetrimino *tetrimino);
-
-void solve(t_tetrimino *tetrimino, int count);
+void	handle_fd(char *file);
+void	check_errors(t_tlist *head, int gnl);
+void	move_tetriminos(t_tlist *head);
+void	solve_square(t_tlist *head, int count);
+void	free_list(t_tlist *head);
+void	free_square(char **square);
+void	free_all(t_tlist *head, char **square);
 
 #endif

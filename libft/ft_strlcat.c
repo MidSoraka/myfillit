@@ -3,40 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 20:16:46 by vlaine            #+#    #+#             */
-/*   Updated: 2021/12/20 13:02:30 by vlaine           ###   ########.fr       */
+/*   Created: 2021/11/04 19:32:13 by raho              #+#    #+#             */
+/*   Updated: 2021/11/29 19:10:39 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	size_t	index;
-	size_t	digits;
-	size_t	len;
+	size_t	i;
+	size_t	j;
+	size_t	lendst;
+	size_t	lensrc;
 
-	index = 0;
-	digits = ft_strlen(dst);
-	len = digits;
-	while (len < dstsize - 1 && dstsize > 0 && src[index])
-		dst[len++] = src[index++];
-	if (dstsize > 0 && dstsize > len)
-		dst[len] = '\0';
-	if (dstsize > 0 && dstsize > len)
-		index++;
-	if (src[index] == '\0')
+	lendst = ft_strlen(dst);
+	lensrc = ft_strlen(src);
+	i = ft_strlen(dst);
+	j = 0;
+	if (size == 0)
+		return (lensrc);
+	if (size < lendst)
+		return (lensrc + size);
+	while (src[j] != '\0' && i < size - 1)
 	{
-		if (index != 0)
-			len = index + digits;
+		dst[i] = src[j];
+		i++;
+		j++;
 	}
-	else
-		len = ft_strlen(src) + digits;
-	if (index == 0)
-		len = ft_strlen(src) + dstsize;
-	if (index == 0 && ft_strlen(src) == 0)
-		len = digits;
-	return (len);
+	dst[i] = '\0';
+	return (lensrc + lendst);
 }

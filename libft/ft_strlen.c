@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 16:27:37 by vlaine            #+#    #+#             */
-/*   Updated: 2021/12/08 12:38:26 by vlaine           ###   ########.fr       */
+/*   Created: 2021/11/04 19:24:58 by raho              #+#    #+#             */
+/*   Updated: 2021/11/15 16:35:55 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ size_t	ft_strlen(const char *s)
 	size_t	index;
 
 	index = 0;
-	while (s[index])
-	{
+	while (s[index] != '\0')
 		index++;
-	}
 	return (index);
 }

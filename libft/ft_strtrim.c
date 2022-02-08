@@ -3,70 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/12 15:51:48 by vlaine            #+#    #+#             */
-/*   Updated: 2021/12/20 13:38:16 by vlaine           ###   ########.fr       */
+/*   Created: 2021/11/04 22:00:57 by raho              #+#    #+#             */
+/*   Updated: 2022/01/03 15:27:22 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_start(char const *s)
+static size_t	ft_strlennows(const char *s)
 {
-	size_t	index;
-	size_t	start;
+	int		i;
+	int		lead;
+	int		trail;
+	size_t	len;
 
-	start = 0;
-	index = 0;
-	while (index != 1)
+	i = 0;
+	len = 0;
+	trail = 0;
+	while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
+		i++;
+	lead = i;
+	while (s[i] != '\0')
 	{
-		if (s[start] == ' ' || s[start] == '\n' || s[start] == '\t')
-			start++;
+		if (s[i] != ' ' && s[i] != '\n' && s[i] != '\t')
+		{
+			i++;
+			trail = i;
+		}
 		else
-			index = 1;
+			i++;
 	}
-	return (start);
+	if (trail != 0)
+		return (trail - lead);
+	return (0);
 }
 
-static int	ft_end(char const *s, int digits)
+static char	*ft_strcpynows(char const *s, char *new)
 {
-	size_t	index;
+	int	i;
+	int	j;
+	int	max;
 
-	index = 0;
-	while (index != 1)
+	i = 0;
+	j = 0;
+	max = 0;
+	while (s[i] != '\0')
 	{
-		if (s[digits] == ' ' || s[digits] == '\n' || s[digits] == '\t')
-			digits--;
-		else
-			index = 1;
+		if (s[i] != ' ' && s[i] != '\n' && s[i] != '\t')
+			max = i;
+		i++;
 	}
-	return (digits);
+	i = 0;
+	while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
+		i++;
+	while (s[i] != '\0' && i <= max)
+	{
+		new[j] = s[i];
+		i++;
+		j++;
+	}
+	new[j] = '\0';
+	return (new);
 }
 
 char	*ft_strtrim(char const *s)
 {
-	char	*str;
-	int		digits;
-	int		start;
-	int		index;
+	char	*new;
 
-	digits = ft_strlen(s) - 1;
-	start = ft_start(s);
-	digits = ft_end(s, digits);
-	digits = digits - start;
-	digits++;
-	if (digits < 0)
-		digits = 0;
-	index = 0;
-	str = (char *) malloc((digits) * sizeof(char) + 1);
-	if (str == NULL)
-		return (NULL);
-	while (index != digits)
+	if (s)
 	{
-		str[index] = s[index + start];
-		index++;
+		new = (char *)malloc(sizeof(char) * (ft_strlennows(s) + 1));
+		if (!new)
+			return (0);
+		return (ft_strcpynows(s, new));
 	}
-	str[index] = '\0';
-	return (str);
+	return (0);
 }

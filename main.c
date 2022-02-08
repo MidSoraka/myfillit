@@ -12,15 +12,20 @@
 
 #include "fillit.h"
 
+/* Checks that a single filename was given as an argument on the command line
+** and sends the filename forward. If the check fails, the program quits and gives a
+** short instruction on how to use the program.
+*/  
+
 int	main(int argc, char *argv[])
 {
 	if (argc != 2)
 	{
-		ft_putstr("usage: ./fillit source_file");
+		ft_putstr("usage: ./fillit tetrimino_file");
 		ft_putchar('\n');
-		return (0);
+		return (1);
 	}
 	else
-		fillit(argv[1]);
+		handle_fd(argv[1]);
 	return (0);
 }

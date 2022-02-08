@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strequ.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/12 14:14:33 by vlaine            #+#    #+#             */
-/*   Updated: 2021/11/26 11:51:32 by vlaine           ###   ########.fr       */
+/*   Created: 2021/11/04 20:01:32 by raho              #+#    #+#             */
+/*   Updated: 2021/11/24 21:26:29 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,18 @@ int	ft_strequ(char const *s1, char const *s2)
 	int	index;
 
 	index = 0;
-	while (s1[index])
+	if (s1 && s2)
 	{
-		if ((s1[index] - s2[index]) != 0)
+		while (s1[index] != '\0')
 		{
-			return (0);
+			if (s1[index] != s2[index])
+				return (0);
+			index++;
 		}
-		index++;
-	}
-	if ((s1[index] - s2[index]) != 0)
-		return (0);
-	else
+		if (s2[index] != '\0')
+			return (0);
 		return (1);
+	}
+	else
+		return (0);
 }

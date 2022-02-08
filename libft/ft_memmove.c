@@ -3,37 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 14:18:44 by vlaine            #+#    #+#             */
-/*   Updated: 2021/12/16 20:05:21 by vlaine           ###   ########.fr       */
+/*   Created: 2021/11/04 19:21:22 by raho              #+#    #+#             */
+/*   Updated: 2021/11/29 17:30:36 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+void	*ft_memmove(void *s1, const void *s2, size_t n)
 {
-	size_t	index;
+	size_t			i;
 
-	if (dst == NULL && src == NULL)
-		return (NULL);
-	index = 0;
-	if (src < dst)
+	i = 0;
+	if (s1 != 0 || s2 != 0)
 	{
-		while (0 != len)
+		if (s1 < s2)
 		{
-			len--;
-			((char *)dst)[len] = (((char *)src)[len]);
+			while (i < n)
+			{
+				((unsigned char *)s1)[i] = ((unsigned char *)s2)[i];
+				i++;
+			}
+		}
+		else
+		{
+			while (n > 0)
+			{
+				n--;
+				((unsigned char *)s1)[n] = ((unsigned char *)s2)[n];
+			}	
 		}
 	}
-	else if (dst < src)
-	{
-		while (index < len)
-		{
-			((char *)dst)[index] = (((char *)src)[index]);
-			index++;
-		}
-	}
-	return (dst);
+	return (s1);
 }

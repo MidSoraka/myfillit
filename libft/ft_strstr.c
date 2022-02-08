@@ -3,37 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 10:01:46 by vlaine            #+#    #+#             */
-/*   Updated: 2021/11/08 10:01:46 by vlaine           ###   ########.fr       */
+/*   Created: 2021/11/04 19:35:24 by raho              #+#    #+#             */
+/*   Updated: 2021/11/24 22:22:45 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strstr(const char *haystack, const char *needle)
+static char	*ft_find(int h, int i, const char *s1, const char *s2)
 {
-	char	*ptr;
-	size_t	index;
-	size_t	undex;
+	int		j;
+	char	*ret;
 
-	index = 0;
-	if (ft_strlen(needle) == 0)
-		return (&((char *)haystack)[0]);
-	while (haystack[index] != '\0')
+	j = 0;
+	while (s1[h] != '\0')
 	{
-		undex = 0;
-		ptr = &((char *)haystack)[index];
-		while (haystack[index] == needle[undex])
+		if (s1[h + j] == s2[i])
 		{
-			if (needle[undex + 1] == '\0')
-				return (ptr);
-			undex++;
-			index++;
+			if (i == 0)
+				ret = (char *)&s1[h];
+			i++;
+			j++;
+			if (s2[i] == '\0')
+				return (ret);
 		}
-		index = index - undex;
-		index++;
+		else
+		{
+			i = 0;
+			j = 0;
+			h++;
+		}
 	}
-	return (NULL);
+	return (0);
+}
+
+char	*ft_strstr(const char *s1, const char *s2)
+{
+	if (*s2 == '\0')
+		return ((char *)s1);
+	return (ft_find(0, 0, s1, s2));
 }

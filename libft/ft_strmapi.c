@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/12 14:08:18 by vlaine            #+#    #+#             */
-/*   Updated: 2021/12/03 03:35:59 by vlaine           ###   ########.fr       */
+/*   Created: 2021/11/04 20:00:23 by raho              #+#    #+#             */
+/*   Updated: 2021/11/24 22:26:24 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,20 @@
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
 	int		index;
-	char	*str;
+	char	*new;
 
 	index = 0;
-	while (s[index])
-		index++;
-	str = (char *) malloc(index * sizeof(char) + 1);
-	if (str == NULL)
-		return (NULL);
-	index = 0;
-	while (s[index])
+	if (s)
 	{
-		str[index] = s[index];
-		str[index] = ((*f)(index, s[index]));
-		index++;
+		new = ft_strdup(s);
+		if (!new)
+			return (0);
+		while (new[index] != '\0')
+		{
+			new[index] = (*f)(index, new[index]);
+			index++;
+		}
+		return (new);
 	}
-	str[index] = '\0';
-	return (str);
+	return (0);
 }

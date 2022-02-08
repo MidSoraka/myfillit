@@ -3,38 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 05:56:00 by vlaine            #+#    #+#             */
-/*   Updated: 2021/12/20 12:21:32 by vlaine           ###   ########.fr       */
+/*   Created: 2021/11/25 02:57:58 by raho              #+#    #+#             */
+/*   Updated: 2022/01/03 15:27:40 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+static int	ft_cpycontent(t_list *new, void const *content, size_t content_size)
+{
+	size_t	i;
+
+	i = 0;
+	new->content = malloc(content_size);
+	if (new->content == 0)
+		return (0);
+	while (i < content_size)
+	{
+		*(char *)(new->content + i) = *(char *)(content + i);
+		i++;
+	}
+	new->content_size = content_size;
+	return (1);
+}
+
 t_list	*ft_lstnew(void const *content, size_t content_size)
 {
-	t_list	*list;
-	size_t	index;
+	t_list		*new;
+	int			ret;
 
-	index = 0;
-	list = malloc(sizeof(t_list));
-	if (list == NULL)
-		return (NULL);
-	list->content = malloc(content_size);
-	if (list->content == NULL || (void *)content == NULL)
+	new = (t_list *)malloc(sizeof(t_list));
+	if (!new)
+		return (0);
+	if (content)
 	{
-		list->content = NULL;
-		list->content_size = 0;
-		list->next = NULL;
-		if ((void *)content == NULL)
-			return (list);
-		free(list);
-		return (NULL);
+		ret = ft_cpycontent(new, content, content_size);
+		if (!ret)
+		{
+			free(new);
+			return (0);
+		}
 	}
-	while (content_size >= index++)
-		((char *)list->content)[index - 1] = ((char *)content)[index - 1];
-	list->content_size = content_size;
-	list->next = NULL;
-	return (list);
+	else
+	{
+		new->content = 0;
+		new->content_size = 0;
+	}
+	new->next = 0;
+	return (new);
 }

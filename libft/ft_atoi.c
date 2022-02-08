@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 09:59:08 by vlaine            #+#    #+#             */
-/*   Updated: 2021/11/08 09:59:08 by vlaine           ###   ########.fr       */
+/*   Created: 2021/11/04 19:39:32 by raho              #+#    #+#             */
+/*   Updated: 2021/11/26 15:57:48 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,29 @@
 
 int	ft_atoi(const char *str)
 {
-	int				isp;
-	long long int	atoiis;
+	int	i;
+	int	ret;
+	int	neg;
 
-	isp = 1;
-	atoiis = 0;
-	while ((*str && *str == ' ') || (*str >= 9 && *str <= 13))
-		str++;
-	if (*str == '-' || *str == '+')
+	i = 0;
+	ret = 0;
+	neg = 1;
+	while ((str[i] < 33 && str[i] > 0) && str[i] != 27)
+		i++;
+	if (str[i] == '-' && (str[i + 1] > 47 && str[i + 1] < 58))
 	{
-		if (*str == '-')
-			isp *= -1;
-		str++;
+		neg = neg * -1;
+		i++;
 	}
-	while (*str >= '0' && *str <= '9')
+	else if (str[i] == '+' && (str[i + 1] > 47 && str[i + 1] < 58))
+		i++;
+	while (str[i] > 47 && str[i] < 58)
 	{
-		atoiis = atoiis * 10;
-		atoiis = atoiis + *str - 48;
-		if (isp * atoiis > 2147483647)
-			return (-1);
-		if (isp * atoiis < -2147483648)
-			return (0);
-		str++;
+		ret = ret * 10 + (str[i] - 48);
+		i++;
 	}
-	return (atoiis * isp);
+	if (ret)
+		return (ret * neg);
+	else
+		return (0);
 }

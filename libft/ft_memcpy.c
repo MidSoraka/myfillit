@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   memcpy.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/02 19:38:43 by vlaine            #+#    #+#             */
-/*   Updated: 2021/12/03 03:12:54 by vlaine           ###   ########.fr       */
+/*   Created: 2021/11/04 19:16:32 by raho              #+#    #+#             */
+/*   Updated: 2021/11/24 19:21:31 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	*ft_memcpy(void *s1, const void *s2, size_t n)
 {
-	size_t	i;
+	size_t	index;
 
-	i = 0;
-	if (dst == NULL && src == NULL)
-		return (NULL);
-	while (i != n)
+	index = 0;
+	if (s1 != 0 || s2 != 0)
 	{
-		((unsigned char *) dst)[i] = ((char *)src)[i];
-		i++;
+		while (n > index)
+		{
+			((char *)s1)[index] = ((char *)s2)[index];
+			index++;
+		}
 	}
-	return (dst);
+	return (s1);
 }

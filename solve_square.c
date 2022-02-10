@@ -292,8 +292,6 @@ static int	place(char **square, t_tlist *elem, int row, int col)
 	int frow;
 	int fcol;
 
-	frow = 0;
-	fcol = 0;
 	index = 0;
 	frow = elem->row[0];
 	fcol = elem->col[0];
@@ -338,7 +336,7 @@ static int	place(char **square, t_tlist *elem, int row, int col)
 ** previous function knows to increase the square size for the next try.
 */
  
-static int	fillit(char **square, t_tlist *head)
+static int	fillit(char **square, t_tlist *head, int smallest_size)
 {
 	int	col;
 	int	row;
@@ -349,21 +347,24 @@ static int	fillit(char **square, t_tlist *head)
 		col = 0;
 		while (square[row][col] != '\0')
 		{
-			if (square[row][col] == '.')
-			{
-				if (place(square, head, row, col))  // Checks the spot and places if possible. Returns true if succesful, false if not
+			if (row + head->height > smallest_size)
+				return (0);
+			else
+				if (square[row][col] == '.')
 				{
-					if (head->next->next != NULL)
+					if (place(square, head, row, col))  // Checks the spot and places if possible. Returns true if succesful, false if not
 					{
-						if (fillit(square, head->next))  // Calls for the function again to do the rest of the pieces
-							return (1);
+						if (head->next->next != NULL)
+						{
+							if (fillit(square, head->next, smallest_size))  // Calls for the function again to do the rest of the pieces
+								return (1);
+							else
+								remove_piece(square, head);   // Removes the previous piece that was placed
+						}
 						else
-							remove_piece(square, head);   // Removes the previous piece that was placed
+							return (1);    
 					}
-					else
-						return (1);    
 				}
-			}
 			col++;
 		}
 		row++;
@@ -389,7 +390,7 @@ void	solve_square(t_tlist *head, int count)
 	count = count * 4;
 	smallest_size = sqrt(count);
 	square = new_square(head, smallest_size);
-	while (fillit(square, head) == 0)
+	while (fillit(square, head, smallest_size++) == 0)
 		enlargen_square(square);
 	while (square[index] != NULL && square[index][0] != '\0')
 	{

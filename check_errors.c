@@ -30,6 +30,8 @@ static int	side_by_side(t_tlist *elem, int row, int col)
 	if (row != 3)
 		if (elem->tetrimino[row + 1][col] == '#')
 			height++;
+	elem->width = width + elem->width;
+    elem->height = height + elem->height;
 	return (width + height);
 }
 
@@ -117,13 +119,30 @@ void	check_errors(t_tlist *head, int gnl)
 	}
 	while (temp->next != NULL)
 	{
-
+		temp->width = 0;
+		temp->height = 0;
 		if (validate_tetriminos(temp, 0, 0) == -1)
 		{
 			ft_putendl("error");
 			free_list(head);
 			exit (6);
 		}
+		if (temp->width == 4 && temp->height == 4)
+        {
+            temp->width = 2;
+            temp->height = 2;
+        }
+        if (temp->width == 0)
+            temp->width = 1;
+        if (temp->height == 0)
+            temp->height = 1;
+        if (temp->width >= 4)
+            if(temp->width-- == 6)
+                temp->width--;
+        if (temp->height >= 4)
+            if(temp->height-- == 6)
+                temp->height--;
+			printf("\nwidth is %d\nheight is %d\n", temp->width, temp->height);
 		temp = temp->next;
 	}
 	turn_alpha(head);

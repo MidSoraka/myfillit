@@ -23,6 +23,8 @@ typedef struct s_tlist
 	char				**tetrimino;
 	int					row[5];
 	int					col[5];
+	int					width;
+	int					height;
 	struct s_tlist	*next;
 }	t_tlist;
 

@@ -345,11 +345,11 @@ static int	fillit(char **square, t_tlist *head, int smallest_size)
 	while (square[row] != NULL)	// Go through the square to check if a tetrimino can be placed in it
 	{
 		col = 0;
-		while (square[row][col] != '\0')
-		{
-			if (row + head->height > smallest_size)
+		if (row + head->height > smallest_size)
 				return (0);
-			else
+		else
+			while (square[row][col] != '\0')
+			{
 				if (square[row][col] == '.')
 				{
 					if (place(square, head, row, col))  // Checks the spot and places if possible. Returns true if succesful, false if not
@@ -365,8 +365,8 @@ static int	fillit(char **square, t_tlist *head, int smallest_size)
 							return (1);    
 					}
 				}
-			col++;
-		}
+				col++;
+			}
 		row++;
 	}
 	return (0);	// If the piece couldn't be placed in any spot, return false.

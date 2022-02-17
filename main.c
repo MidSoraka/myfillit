@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: vlaine <vlaine@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/19 13:37:19 by raho              #+#    #+#             */
-/*   Updated: 2022/02/11 12:54:08 by raho             ###   ########.fr       */
+/*   Created: 2022/02/17 19:42:58 by vlaine            #+#    #+#             */
+/*   Updated: 2022/02/17 19:42:58 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char *argv[])
 	if (argc != 2)
 	{
 		ft_putendl("usage: ./fillit tetrimino_file");
-		return (1);
+		return (0);
 	}
 	else
 		handle_fd(argv[1]);

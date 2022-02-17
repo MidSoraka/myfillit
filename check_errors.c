@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: vlaine <vlaine@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/25 22:44:32 by raho              #+#    #+#             */
-/*   Updated: 2022/02/11 10:48:30 by raho             ###   ########.fr       */
+/*   Created: 2022/02/17 19:42:38 by vlaine            #+#    #+#             */
+/*   Updated: 2022/02/17 19:42:38 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	check_errors(t_tlist *head, int gnl)
 	{
 		ft_putendl("error");
 		free_list(head);
-		exit (5);
+		exit (0);
 	}
 	while (temp != NULL)
 	{
@@ -122,7 +122,7 @@ void	check_errors(t_tlist *head, int gnl)
 		{
 			ft_putendl("error");
 			free_list(head);
-			exit (6);
+			exit (0);
 		}
 		temp->height = (temp->row[3] - temp->row[0]) + 1;
 		temp = temp->next;

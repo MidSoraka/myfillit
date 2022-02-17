@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   solve_square.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vlaine <vlaine@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 11:39:15 by raho              #+#    #+#             */
-/*   Updated: 2022/02/17 17:12:03 by vlaine           ###   ########.fr       */
+/*   Created: 2022/02/17 19:43:10 by vlaine            #+#    #+#             */
+/*   Updated: 2022/02/17 19:43:11 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-/* Removes a tetrimino piece using the help of 'int letter' that was saved in
-** the structs when turning the '#'s into letters.
+/* Removes a tetrimino piece using the help of coordinates that were saved
+** inside the struct.
 */
 
 static void	remove_piece(char **square, t_tlist *elem)
@@ -37,10 +37,6 @@ static void	remove_piece(char **square, t_tlist *elem)
 	}
 }
 
-/* Checks and places tetrimino piece to the given coordinate if possible.
-** Returns true if succesful and false if it not.
-*/
-
 static int	place(char **square, t_tlist *elem, int frow, int fcol)
 {
 	int	index;
@@ -58,6 +54,10 @@ static int	place(char **square, t_tlist *elem, int frow, int fcol)
 	}
 	return (1);
 }
+
+/* Checks and places tetrimino piece to the given coordinate if possible.
+** Returns true if succesful and false if it not.
+*/
 
 static int	check(char **square, t_tlist *elem, int row, int col)
 {
@@ -86,16 +86,6 @@ static int	check(char **square, t_tlist *elem, int row, int col)
 	return (0);
 }
 
-/* Goes through the square to check if the next tetrimino can be placed in it.
-** Checks every coordinate one by one with function 'place_tetrimino'.
-** If tetrimino was placed and there are more tetriminos left in the list,
-** the function calls for itself with the next tetrimino as the new head of the
-** list. If placing isn't possible at some point, the tetrimino is removed and
-** the checking continues. If the function reaches the end of the square
-** without being able to place all the tetriminos, it returns 0 so that the
-** previous function knows to increase the square size for the next try.
-*/
-
 static int	fillit_helper( char **square, t_tlist *head, int smallest_size)
 {
 	if (head->next != NULL)
@@ -111,6 +101,15 @@ static int	fillit_helper( char **square, t_tlist *head, int smallest_size)
 	else
 		return (1);
 }
+
+/* Goes through the square to check if the next tetrimino can be placed in it.
+** If tetrimino was placed and there are more tetriminos left in the list,
+** the function calls for itself with the next tetrimino as the new head of the
+** list. If placing isn't possible at some point, the tetrimino is removed and
+** the checking continues. If the function reaches the end of the square
+** without being able to place all the tetriminos, it returns 0 so that the
+** previous function knows to increase the square size for the next try.
+*/
 
 int	fillit(char **square, t_tlist *head, int smallest_size)
 {

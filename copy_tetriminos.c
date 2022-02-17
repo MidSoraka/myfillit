@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_tetriminos.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: vlaine <vlaine@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/25 22:41:01 by raho              #+#    #+#             */
-/*   Updated: 2022/02/11 15:16:42 by raho             ###   ########.fr       */
+/*   Created: 2022/02/17 19:42:45 by vlaine            #+#    #+#             */
+/*   Updated: 2022/02/17 19:42:45 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* Creates new struct element for a new tetrimino piece and allocates memory
 ** for 'char **tetrimino' inside the struct. In case of an error, free the
-** already allocated memory and exit with error codes.
+** already allocated memory and exit.
 */
 
 static t_tlist	*new_tetrimino(t_tlist *head)
@@ -25,26 +25,21 @@ static t_tlist	*new_tetrimino(t_tlist *head)
 	if (new == NULL)
 	{
 		free_list(head);
-		exit (3);
+		exit (0);
 	}
 	new->tetrimino = (char **)malloc(sizeof(char *) * (4 + 1));
 	if (new->tetrimino == NULL)
 	{
 		free(new);
 		free_list(head);
-		exit (4);
+		exit (0);
 	}
 	new->tetrimino[4] = NULL;
 	new->next = NULL;
 	return (new);
 }
 
-/* Reads the tetriminos from the file one line at a time using get_next_line.
-** Saves the complete tetriminos to their own structs in 4 line cycles.
-** Forms a linked list from the structs and sends the head of the list forward.
-*/
-
-static int	read1(int fd, t_tlist *temp, int index)
+static int	read_line(int fd, t_tlist *temp, int index)
 {
 	char	line[6];
 	size_t	len;
@@ -61,7 +56,7 @@ static int	read1(int fd, t_tlist *temp, int index)
 	return (gnl);
 }
 
-static int	read2(int fd)
+static int	read_empty_line(int fd)
 {
 	char	line[6];
 	int		gnl;
@@ -69,10 +64,15 @@ static int	read2(int fd)
 	gnl = 0;
 	ft_bzero(line, 5);
 	gnl = (int)read(fd, &line, 1);
-	if (gnl != (int)ft_strlen(line))
+	if (line[0] != '\n' || gnl != (int)ft_strlen(line))
 		return (-1);
 	return (gnl);
 }
+
+/* Reads the tetriminos from the file one line at a time.
+** Saves the complete tetriminos to their own structs in 4 line cycles.
+** Forms a linked list from the structs and sends the head of the list forward.
+*/
 
 static void	copy_tetriminos(int fd)
 {
@@ -87,12 +87,12 @@ static void	copy_tetriminos(int fd)
 	index = 0;
 	while (gnl > 0)
 	{
-		gnl = read1(fd, temp, index++);
+		gnl = read_line(fd, temp, index++);
 		if (gnl < 1)
 			temp->tetrimino[index] = NULL;
 		else if (index == 4)
 		{
-			gnl = read2(fd);
+			gnl = read_empty_line(fd);
 			if (gnl > 0)
 				temp->next = new_tetrimino(head);
 			if (gnl > 0)
@@ -106,7 +106,7 @@ static void	copy_tetriminos(int fd)
 /* Opens the file given as an argument on the command line.
 ** Sends the file descriptor forward.
 ** Closes the file after the solving is done.
-** In case of an error, the program exits with error code 1.
+** In case of an error, the program exits.
 */
 
 void	handle_fd(char *file)
@@ -117,12 +117,12 @@ void	handle_fd(char *file)
 	if (fd == -1)
 	{
 		ft_putendl("error");
-		exit (2);
+		exit (0);
 	}
 	copy_tetriminos(fd);
 	if (close(fd) == -1)
 	{
 		ft_putendl("error");
-		exit (9);
+		exit (0);
 	}
 }

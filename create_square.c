@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solve_square.c                                     :+:      :+:    :+:   */
+/*   create_square.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: vlaine <vlaine@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/26 11:44:34 by raho              #+#    #+#             */
-/*   Updated: 2022/02/11 16:27:44 by raho             ###   ########.fr       */
+/*   Created: 2022/02/17 19:42:52 by vlaine            #+#    #+#             */
+/*   Updated: 2022/02/17 19:42:52 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-/* Creates a 2D array grid for the square. Its size is 10x10 and there will be
-** 2x2 square of dots in the top-left corner of it, other places will be
-** initialized to 0. In case of an error while allocating memory, the function
-** calls to free all dynamically allocated memories and exits with error codes.
+/* The size of the array is 27x27. Assigns dots to represent the smallest
+** calculated size square with given tetriminos. 
+** In case of an error while allocating memory, the function
+** calls to free all dynamically allocated memories and exits.
 */
 
 static char	**new_square(t_tlist *head, int smallest_size)
@@ -28,7 +28,7 @@ static char	**new_square(t_tlist *head, int smallest_size)
 	if (square == NULL)
 	{
 		free_list(head);
-		exit (7);
+		exit (0);
 	}
 	while (index < 26)
 	{
@@ -36,7 +36,7 @@ static char	**new_square(t_tlist *head, int smallest_size)
 		if (square[index] == NULL)
 		{
 			free_all(head, square);
-			exit (8);
+			exit (0);
 		}
 		if (index < smallest_size)
 			ft_memset(square[index], '.', (unsigned long)smallest_size);
@@ -69,12 +69,11 @@ static void	enlargen_square(char **square, int smallest_size)
 	}
 }
 
-/* Creates the square where to put all the tetrimino pieces. Its size is
-** 10x10 and there will be only 2x2 square of dots inside since 2x2 is the
-** smallest solved square.
+/* Creates the square where to put all the tetrimino pieces.
 ** Calls the solving function 'fillit' in a while loop and every time that
 ** the function can't solve the square, it enlarges the square of dots.
-** Prints the solved square to the standard output.
+** Prints the solved square to the standard output
+** and frees all the dynamically allocated memory.
 */
 
 void	solve_square(t_tlist *head, int count)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: vlaine <vlaine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 22:00:57 by raho              #+#    #+#             */
-/*   Updated: 2022/01/03 15:27:22 by raho             ###   ########.fr       */
+/*   Updated: 2022/02/17 17:17:19 by vlaine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ static size_t	ft_strlennows(const char *s)
 	int		i;
 	int		lead;
 	int		trail;
-	size_t	len;
 
 	i = 0;
-	len = 0;
 	trail = 0;
 	while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
 		i++;

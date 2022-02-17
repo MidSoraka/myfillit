@@ -62,11 +62,9 @@ static int	assign_value(t_tlist *elem, int row, int col, int hasfound)
 
 static int	validate_tetriminos(t_tlist *elem, int hasfound)
 {
-	int	len;
 	int	row;
 	int	col;
 
-	len = 0;
 	row = 0;
 	col = 0;
 	elem->row[4] = '\0';

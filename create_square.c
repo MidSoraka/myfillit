@@ -39,7 +39,7 @@ static char	**new_square(t_tlist *head, int smallest_size)
 			exit (8);
 		}
 		if (index < smallest_size)
-			ft_memset(square[index], '.', smallest_size);
+			ft_memset(square[index], '.', (unsigned long)smallest_size);
 		index++;
 	}
 	square[index] = 0;
@@ -97,4 +97,5 @@ void	solve_square(t_tlist *head, int count)
 		ft_putendl(square[index]);
 		index++;
 	}
+	free_all(head, square);
 }

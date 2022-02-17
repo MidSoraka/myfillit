@@ -6,7 +6,7 @@
 /*   By: omistaja <omistaja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 11:39:15 by raho              #+#    #+#             */
-/*   Updated: 2022/02/16 21:12:30 by omistaja         ###   ########.fr       */
+/*   Updated: 2022/02/17 16:21:34 by omistaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	place(char **square, t_tlist *elem, int frow, int fcol)
 	while (index < 4)
 	{
 		square[row + elem->row[index] - frow] \
-				[col + elem->col[index] - fcol] = elem->letter;
+				[col + elem->col[index] - fcol] = (char)elem->letter;
 		index++;
 	}
 	return (1);

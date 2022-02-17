@@ -6,23 +6,33 @@
 #    By: omistaja <omistaja@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/04 18:25:17 by raho              #+#    #+#              #
-#    Updated: 2022/02/11 16:50:12 by raho             ###   ########.fr        #
+#    Updated: 2022/02/17 16:38:10 by omistaja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
 CC = gcc
+LIB = libft/libft.a
+INCLUDE = libft/
 CFLAGS = -Wall -Wextra -Werror
-SRCS = main.c copy_tetriminos.c check_errors.c move_tetriminos.c create_square.c solve_square.c free_all.c
+SRCS = main.c copy_tetriminos.c check_errors.c move_tetriminos.c\
+	create_square.c solve_square.c free_all.c
+OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME):
-	$(CC) $(CFLAGS) $(SRCS) -o $(NAME) -L./libft -lft
+$(NAME): $(SRCS) $(LIB) $(INCLUDE)
+	$(CC) $(CFLAGS) $(SRCS) $(LIB) -I $(INCLUDE) -o $(NAME)
+
+$(LIB):
+	make -C libft
 
 clean:
+	make -C libft clean
+	rm -f $(OBJS)
 
 fclean: clean
+	make -C libft fclean
 	rm -f $(NAME)
 
 re: fclean all

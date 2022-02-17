@@ -96,7 +96,7 @@ static void	turn_alpha(t_tlist *head)
 			while (temp->tetrimino[row][col] != '\0')
 			{	
 				if (temp->tetrimino[row][col] == '#')
-					temp->tetrimino[row][col] = letter;
+					temp->tetrimino[row][col] = (char)letter;
 				col++;
 			}	
 			row++;

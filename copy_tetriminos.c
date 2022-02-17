@@ -52,7 +52,7 @@ static int	read1(int fd, t_tlist *temp, int index)
 
 	gnl = 0;
 	ft_bzero(line, 6);
-	gnl = read(fd, &line, 5);
+	gnl = (int)read(fd, &line, 5);
 	temp->tetrimino[index] = ft_strdup(line);
 	len = ft_strlen(temp->tetrimino[index]);
 	if (len != 5 || temp->tetrimino[index][4] != '\n')
@@ -68,7 +68,7 @@ static int	read2(int fd)
 
 	gnl = 0;
 	ft_bzero(line, 5);
-	gnl = read(fd, &line, 1);
+	gnl = (int)read(fd, &line, 1);
 	if (gnl != (int)ft_strlen(line))
 		return (-1);
 	return (gnl);
@@ -116,15 +116,13 @@ void	handle_fd(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr("error couldn't open file: ");
-		ft_putendl(file);
+		ft_putendl("error");
 		exit (2);
 	}
 	copy_tetriminos(fd);
 	if (close(fd) == -1)
 	{
-		ft_putstr("error couldn't close file: ");
-		ft_putendl(file);
+		ft_putendl("error");
 		exit (9);
 	}
 }

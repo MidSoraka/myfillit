@@ -21,8 +21,7 @@ int	main(int argc, char *argv[])
 {
 	if (argc != 2)
 	{
-		ft_putstr("usage: ./fillit tetrimino_file");
-		ft_putchar('\n');
+		ft_putendl("usage: ./fillit tetrimino_file");
 		return (1);
 	}
 	else

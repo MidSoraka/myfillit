@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 18:24:25 by raho              #+#    #+#             */
-/*   Updated: 2022/02/01 23:29:35 by raho             ###   ########.fr       */
+/*   Updated: 2022/02/11 11:10:14 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void	ft_lstadd(t_list **alst, t_list *new);
 void	ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-int	get_next_line(const int fd, char **line);
+int		get_next_line(const int fd, char **line);
+float	ft_sqrtf(float nb);
+int		ft_roundup(double nb);
 
 #endif

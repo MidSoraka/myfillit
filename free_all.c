@@ -29,7 +29,7 @@ void	free_list(t_tlist *head)
 		if (temp->tetrimino != NULL)
 		{
 			index = 0;
-			while (index < 5)
+			while (temp->tetrimino[index])
 			{
 				free(temp->tetrimino[index]);
 				index++;

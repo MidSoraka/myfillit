@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 11:44:34 by raho              #+#    #+#             */
-/*   Updated: 2022/02/03 23:55:39 by raho             ###   ########.fr       */
+/*   Updated: 2022/02/11 16:42:20 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	check_up(t_tlist *elem)
 {
 	int	counter;
 	int	col;
-	
+
 	counter = 0;
 	col = 0;
 	while (elem->tetrimino[0][col] != '\0')
@@ -67,7 +67,7 @@ static int	check_left(t_tlist *elem)
 {
 	int	counter;
 	int	row;
-	
+
 	counter = 0;
 	row = 0;
 	while (elem->tetrimino[row] != NULL)
@@ -104,18 +104,19 @@ static void	move_left(t_tlist *elem)
 }
 
 /* Calls for functions that check and move the tetriminos up and left
-** if the functions return true. Aim is to get the tetriminos to their top-left corners.
+** if the functions return true.
+** Aim is to get the tetriminos to their top-left corners.
 ** After that the linked list is sent to solve the square.
 */
 
 void	move_tetriminos(t_tlist *head)
 {
 	t_tlist	*temp;
-	int	count;
+	int		count;
 
 	temp = head;
 	count = 0;
-	while (temp->next != NULL)
+	while (temp != NULL)
 	{
 		while (check_up(temp))
 			move_up(temp);
@@ -123,6 +124,12 @@ void	move_tetriminos(t_tlist *head)
 			move_left(temp);
 		count++;
 		temp = temp->next;
+	}
+	if (count < 1 || count > 26)
+	{
+		ft_putendl("error");
+		free_list(head);
+		exit (0);
 	}
 	solve_square(head, count);
 }

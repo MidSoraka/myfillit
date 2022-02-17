@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 22:44:32 by raho              #+#    #+#             */
-/*   Updated: 2022/02/02 02:23:03 by raho             ###   ########.fr       */
+/*   Updated: 2022/02/11 10:48:30 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,30 @@
 
 static int	side_by_side(t_tlist *elem, int row, int col)
 {
-	int	width;
-	int	height;
+	int	count;
 
-	width = 0;
-	height = 0;
+	count = 0;
 	if (col != 0)
 		if (elem->tetrimino[row][col - 1] == '#')
-			width++;
+			count++;
 	if (row != 0)
 		if (elem->tetrimino[row - 1][col] == '#')
-			height++;
+			count++;
 	if (elem->tetrimino[row][col + 1] == '#')
-		width++;
+		count++;
 	if (row != 3)
 		if (elem->tetrimino[row + 1][col] == '#')
-			height++;
-	elem->width = width + elem->width;
-    elem->height = height + elem->height;
-	return (width + height);
+			count++;
+	return (count);
 }
 
-static int	validate_tetriminos(t_tlist *elem, int hasfound, int count)
+static int	assign_value(t_tlist *elem, int row, int col, int hasfound)
 {
 	int	len;
-	int	row;
-	int	col;
-	int index; // can maybe use count instead
+	int	index;
 
-	index = 0;
 	len = 0;
-	row = 0;
-	elem->row[4] = '\0';
-	elem->col[4] = '\0';
-	//printf("_______________________________________ %c\n", elem->letter);
+	index = 0;
 	while (elem->tetrimino[row] != NULL)
 	{
 		col = 0;
@@ -55,12 +45,9 @@ static int	validate_tetriminos(t_tlist *elem, int hasfound, int count)
 		{
 			if (elem->tetrimino[row][col++] == '#')
 			{
-				count++;
 				hasfound = side_by_side(elem, row, col - 1) + hasfound;
 				elem->row[index] = row;
-				elem->col[index] = col - 1;
-				//printf("Row %d\nCol %d\n", elem->row[index], elem->col[index]);
-				index++;
+				elem->col[index++] = col - 1;
 			}
 			else if (elem->tetrimino[row][col - 1] != '.')
 				return (-1);
@@ -68,9 +55,23 @@ static int	validate_tetriminos(t_tlist *elem, int hasfound, int count)
 		}
 		row++;
 	}
-	if (hasfound >= 6 && len == 16 && count == 4)
+	if (hasfound >= 6 && len == 16 && index == 4)
 		return (0);
 	return (-1);
+}
+
+static int	validate_tetriminos(t_tlist *elem, int hasfound)
+{
+	int	len;
+	int	row;
+	int	col;
+
+	len = 0;
+	row = 0;
+	col = 0;
+	elem->row[4] = '\0';
+	elem->col[4] = '\0';
+	return (assign_value(elem, row, col, hasfound));
 }
 
 /* Goes through the struct's tetrimino and turns all '#'s to letters and
@@ -86,7 +87,7 @@ static void	turn_alpha(t_tlist *head)
 
 	letter = 65;
 	temp = head;
-	while (temp->next != NULL)
+	while (temp != NULL)
 	{
 		row = 0;
 		while (temp->tetrimino[row] != NULL)
@@ -117,32 +118,15 @@ void	check_errors(t_tlist *head, int gnl)
 		free_list(head);
 		exit (5);
 	}
-	while (temp->next != NULL)
+	while (temp != NULL)
 	{
-		temp->width = 0;
-		temp->height = 0;
-		if (validate_tetriminos(temp, 0, 0) == -1)
+		if (validate_tetriminos(temp, 0) == -1)
 		{
 			ft_putendl("error");
 			free_list(head);
 			exit (6);
 		}
-		if (temp->width == 4 && temp->height == 4)
-        {
-            temp->width = 2;
-            temp->height = 2;
-        }
-        if (temp->width == 0)
-            temp->width = 1;
-        if (temp->height == 0)
-            temp->height = 1;
-        if (temp->width >= 4)
-            if(temp->width-- == 6)
-                temp->width--;
-        if (temp->height >= 4)
-            if(temp->height-- == 6)
-                temp->height--;
-			printf("\nwidth is %d\nheight is %d\n", temp->width, temp->height);
+		temp->height = (temp->row[3] - temp->row[0]) + 1;
 		temp = temp->next;
 	}
 	turn_alpha(head);

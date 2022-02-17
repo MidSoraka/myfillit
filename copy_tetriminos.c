@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 22:41:01 by raho              #+#    #+#             */
-/*   Updated: 2022/02/01 23:33:15 by raho             ###   ########.fr       */
+/*   Updated: 2022/02/11 15:16:42 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ static t_tlist	*new_tetrimino(t_tlist *head)
 		free_list(head);
 		exit (3);
 	}
-    new->tetrimino = (char **)malloc(sizeof(char *) * (4 + 1));
+	new->tetrimino = (char **)malloc(sizeof(char *) * (4 + 1));
 	if (new->tetrimino == NULL)
 	{
 		free(new);
 		free_list(head);
 		exit (4);
 	}
-    new->tetrimino[4] = NULL;
+	new->tetrimino[4] = NULL;
 	new->next = NULL;
 	return (new);
 }
@@ -44,10 +44,40 @@ static t_tlist	*new_tetrimino(t_tlist *head)
 ** Forms a linked list from the structs and sends the head of the list forward.
 */
 
+static int	read1(int fd, t_tlist *temp, int index)
+{
+	char	line[6];
+	size_t	len;
+	int		gnl;
+
+	gnl = 0;
+	ft_bzero(line, 6);
+	gnl = read(fd, &line, 5);
+	temp->tetrimino[index] = ft_strdup(line);
+	len = ft_strlen(temp->tetrimino[index]);
+	if (len != 5 || temp->tetrimino[index][4] != '\n')
+		return (-1);
+	temp->tetrimino[index][4] = '\0';
+	return (gnl);
+}
+
+static int	read2(int fd)
+{
+	char	line[6];
+	int		gnl;
+
+	gnl = 0;
+	ft_bzero(line, 5);
+	gnl = read(fd, &line, 1);
+	if (gnl != (int)ft_strlen(line))
+		return (-1);
+	return (gnl);
+}
+
 static void	copy_tetriminos(int fd)
 {
-	t_tlist *head;
-	t_tlist *temp;
+	t_tlist	*head;
+	t_tlist	*temp;
 	int		gnl;
 	int		index;
 
@@ -57,16 +87,18 @@ static void	copy_tetriminos(int fd)
 	index = 0;
 	while (gnl > 0)
 	{
-		gnl = get_next_line(fd, &temp->tetrimino[index]);
-		if (index == 3)
+		gnl = read1(fd, temp, index++);
+		if (gnl < 1)
+			temp->tetrimino[index] = NULL;
+		else if (index == 4)
 		{
-			temp->next = new_tetrimino(head);
-			temp = temp->next;
-			gnl = get_next_line(fd, &temp->tetrimino[index]);
+			gnl = read2(fd);
+			if (gnl > 0)
+				temp->next = new_tetrimino(head);
+			if (gnl > 0)
+				temp = temp->next;
 			index = 0;
 		}
-		else
-			index++;
 	}
 	check_errors(head, gnl);
 }
@@ -77,9 +109,9 @@ static void	copy_tetriminos(int fd)
 ** In case of an error, the program exits with error code 1.
 */
 
-void handle_fd(char *file)
+void	handle_fd(char *file)
 {
-    int	fd;
+	int	fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
